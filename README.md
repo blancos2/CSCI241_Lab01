@@ -1,6 +1,8 @@
-% CSCI 241 - Lab 7: Huffman Coding
-% Fuqun Huang
-% Winter 2024
+**CSCI 241 - Lab 7: Huffman Coding**
+
+**Fuqun Huang**
+
+**Winter 2024**
 
 ## Overview
 
@@ -10,12 +12,13 @@ You will complete this lab **in pairs**.
 
 ## Git and submission for Lab 7
 
-The Github Classroom link for Lab 7 is available in the Lab 7 assignment on Canvas. The workflow for group assignments is a little different:
+The GitHub Classroom link for Lab 7 is available in the Lab 7 assignment on Canvas. The workflow for group assignments is a little different:
 
-0. First, find out who your partner is on Canvas by checking the Lab 7 Groups in the People tab; the groups are named `{section}_{num}` where `{section}` is your section number and `{num}` is your group number within your section.
+1. First, find a partner within the same lab section as yours whom you want to work with.
 
-1. The first member of your pair to accept the Github Classroom invite should **create a team with the following name:** the WWU usernames of the two teammates, ordered lexicographically, and separated by an underscore. For example, if Daniel (one of our TAs) and I were working on this lab together, our  team would be named `korontd_huangf2`.
-2. The second member of the pair to accept the Github Classroom invite  should find the team created by the first member and join it.
+2. The first member of your pair to accept the GitHub Classroom invite should **create a team with the following name:** the WWU usernames of the two teammates, ordered lexicographically, and separated by an underscore. For example, if Tan (one of our TAs) and I were working on this lab together, our team would be named `nguye495_huangf2`.
+   
+3. The second member of the pair to accept the GitHub Classroom invite  should find the team created by the first member and join it.
 
 There is no skeleton code, so your repository will start out empty, and as in Lab 6, you'll start by creating a fresh Gradle project to work in. Please see the Lab 6 handout for a refresher on how to create a gradle project. Name your project `lab7`, use `lab7` as the package name, and put your main program in `Huffman.java`. 
 
