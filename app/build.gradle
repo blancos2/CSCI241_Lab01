@@ -8,6 +8,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    //id 'java-library'
 }
 
 repositories {
@@ -18,7 +19,7 @@ repositories {
 dependencies {
     // Use JUnit test framework.
     testImplementation libs.junit
-
+    implementation files('libs/heap.jar')
     // This dependency is used by the application.
     implementation libs.guava
 }

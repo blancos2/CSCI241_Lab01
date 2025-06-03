@@ -5,6 +5,7 @@ package lab7;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.io.*;
+import heap.Heap;
 
 public class Huffman {
     public String getGreeting() {
