@@ -17,11 +17,12 @@ repositories {
 
 dependencies {
     // Use JUnit test framework.
-    implementation files('app/libs/heap.jar')
 
     testImplementation libs.junit
     // This dependency is used by the application.
     implementation libs.guava
+    implementation files('libs/heap.jar')
+
 
 }
 
