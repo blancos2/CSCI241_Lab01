@@ -6,13 +6,74 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.io.*;
 import heap.Heap;
+import java.util.*;
 
 public class Huffman {
-    public String getGreeting() {
-        return "Hello World!";
-    }
+    static class Node implements Comparable<Node>{
+        char character;
+        int frequency;
+        Node left;
+        Node right;
+        
+        Node(char character, int frequency){
+            this.character = character;
+            this.frequency = frequency;
+        }
+        Node(Node left, Node right){
+            this.left = left;
+            this.right = right;
+            this.frequency = left.frequency + right.frequency;
+        }
+        boolean isitALeaf(){
+            if (left == null && right == null){
+                return true;
+            }
+            return false;
+        }
+        public String toString(){
+            return isitALeaf() ? "'" + character + "'" : "*";
+        }
+        public int compareTo(Node other){
+            return Integer.compare(this.frequency, other.frequency);
+        }
+        private static void buildCodeMap(Node node, String path, Map<Character, String> map){
+            if (node.isitALeaf()){
+                map.put(node.character, path);
+                return;
+            }
+            buildCodeMap(node.left, path + "0", map);
+            buildCodeMap(node.right, path + "1", map);
 
+        }
+        static String encode(String input, Map<Character, String> codeMap){
+            StringBuilder strb = new StringBuilder();
+            for (char ch: input.toCharArray()){
+                strb.append(codeMap.get(ch));
+            }
+            return strb.toString();
+        }
+        
+        
+        static Node buildTree(Map<Character, Integer> freqMap){
+            Heap<Node, Integer> heap = new Heap<>();
+            for (Map.Entry<Character, Integer> entry: freqMap.entrySet()){
+                heap.add(new Node(entry.getKey(), entry.getValue()), entry.getValue());
+            }
+            while (heap.size() > 1){
+                Node left = heap.poll();
+                Node right = heap.poll();
+                heap.add(new Node(left, right), left.frequency + right.frequency);
+            }
+            return heap.poll();
+        }
+        static Map<Character, Integer> countFrequencies(String input){
+            Map<Character, Integer> map = new HashMap<>();
+            for (char character: input.toCharArray()){
+                map.put(character, map.getOrDefault(character, 0) + 1);
+            }
+            return map;
+        }
+    }
     public static void main(String[] args) {
-        System.out.println(new Huffman().getGreeting());
     }
 }
