@@ -39,6 +39,8 @@ public class Huffman {
          public String toString(){
             return isitALeaf() ? "'" + character + "'" : "*";
         }
+
+        // create comparsion for frequency counts for nodes 
         public int compareTo(Node other){
             return Integer.compare(this.frequency, other.frequency);
         }
@@ -52,6 +54,7 @@ public class Huffman {
             buildCodeMap(node.right, path + "1", map);
         }
 
+        // ENCODE STRING 
               static String encode(String input, Map<Character, String> codeMap){
             StringBuilder strb = new StringBuilder();
             for (char ch: input.toCharArray()){
@@ -60,9 +63,43 @@ public class Huffman {
             return strb.toString();
         }
 
+        // DECODE STRING 
          static String decode(String encodedString, Node root){
-            
+               StringBuilder resultString = new StringBuilder();
+            Node currentNode = root;
+            for (char bit : encodedString.toCharArray()){
+                currentNode = (bit == '0') ? currentNode.left : currentNode.right;
+                if (currentNode.isitALeaf()){
+                    resultString.append(currentNode.character);
+                    currentNode = root;
+                }
+            }
+            return resultString.toString();
+
          }
+
+         // build Tree 
+         static Node buildTree(Map<Character, Integer> freqMap){
+             PriorityQueue<Node> minHeap = new PriorityQueue<>();
+
+        // Step 1: Create leaf nodes for each character and add to min-heap
+        for (Map.Entry<Character, Integer> entry : freqMap.entrySet()) {
+            minHeap.offer(new Node(entry.getKey(), entry.getValue()));
+        }
+
+        // Step 2: Build the tree by combining two smallest nodes until one remains
+        while (minHeap.size() > 1) {
+            Node left = minHeap.poll();
+            Node right = minHeap.poll();
+            Node parent = new Node(left, right);
+            minHeap.offer(parent);
+        }
+
+        // Step 3: The remaining node is the root of the Huffman tree
+        return minHeap.poll();
+
+         }
+
             
 
     
