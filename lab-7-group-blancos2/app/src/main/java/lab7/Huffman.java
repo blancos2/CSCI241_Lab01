@@ -82,12 +82,12 @@ public class Huffman {
          static Node buildTree(Map<Character, Integer> freqMap){
              PriorityQueue<Node> minHeap = new PriorityQueue<>();
 
-        // Step 1: Create leaf nodes for each character and add to min-heap
+        // Create leaf nodes for each character and add to min-heap
         for (Map.Entry<Character, Integer> entry : freqMap.entrySet()) {
             minHeap.offer(new Node(entry.getKey(), entry.getValue()));
         }
 
-        // Step 2: Build the tree by combining two smallest nodes until one remains
+        // Build the tree by combining two smallest nodes until one remains
         while (minHeap.size() > 1) {
             Node left = minHeap.poll();
             Node right = minHeap.poll();
@@ -95,10 +95,19 @@ public class Huffman {
             minHeap.offer(parent);
         }
 
-        // Step 3: The remaining node is the root of the Huffman tree
+        // The remaining node is the root of the Huffman tree
         return minHeap.poll();
 
          }
+
+         // count frequency of individual character using hash map 
+         static Map<Character, Integer> countFrequencies(String input) {
+            Map<Character, Integer> freqMap = new HashMap<>();
+            for (char ch : input.toCharArray()) {
+                freqMap.put(ch, freqMap.getOrDefault(ch, 0) + 1);
+            }
+            return freqMap;
+}
 
             
 
