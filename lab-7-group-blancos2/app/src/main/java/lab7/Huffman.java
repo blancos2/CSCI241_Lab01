@@ -27,23 +27,9 @@ public class Huffman {
             this.right = right;
             this.frequency = left.frequency + right.frequency;
         }
-        // method to confirm if node is a leaf via confirming no L/R children 
 
-        boolean isitALeaf(){
-            if (left == null && right == null){
-                return true;
-            }
-            return false;
-        }
-        // convert character from leaf into a string 
-         public String toString(){
-            return isitALeaf() ? "'" + character + "'" : "*";
-        }
 
-        // create comparsion for frequency counts for nodes 
-        public int compareTo(Node other){
-            return Integer.compare(this.frequency, other.frequency);
-        }
+       
         private static void buildCodeMap(Node node, String path, Map<Character, String> map){
             if (node == null) return;
             if (node.isitALeaf()){
@@ -56,25 +42,27 @@ public class Huffman {
 
         // ENCODE STRING 
               static String encode(String input, Map<Character, String> codeMap){
-            StringBuilder strb = new StringBuilder();
+            StringBuilder str_build = new StringBuilder();
+            // for each ch in char array 
             for (char ch: input.toCharArray()){
-                strb.append(codeMap.get(ch));
+                str_build.append(codeMap.get(ch));
             }
-            return strb.toString();
+            return str_build.toString();
         }
 
         // DECODE STRING 
          static String decode(String encodedString, Node root){
-               StringBuilder resultString = new StringBuilder();
+               StringBuilder str_results = new StringBuilder();
             Node currentNode = root;
+            // for each bit from the encoded string 
             for (char bit : encodedString.toCharArray()){
                 currentNode = (bit == '0') ? currentNode.left : currentNode.right;
                 if (currentNode.isitALeaf()){
-                    resultString.append(currentNode.character);
+                    str_results.append(currentNode.character);
                     currentNode = root;
                 }
             }
-            return resultString.toString();
+            return str_results.toString();
 
          }
 
@@ -107,7 +95,29 @@ public class Huffman {
                 freqMap.put(ch, freqMap.getOrDefault(ch, 0) + 1);
             }
             return freqMap;
+
+           
+
 }
+ // HELPER METHODS ---------------------------
+
+                    // helper method to confirm if node is a leaf via confirming no L/R children 
+            boolean isitALeaf(){
+            if (left == null && right == null){
+                return true;
+            }
+            return false;
+        }
+        
+        // helper method convert character from leaf into a string 
+         public String toString(){
+            return isitALeaf() ? "'" + character + "'" : "*";
+        }
+
+         // helper method: create comparsion for frequency counts for nodes 
+        public int compareTo(Node other){
+            return Integer.compare(this.frequency, other.frequency);
+        }
 
             
 
@@ -125,8 +135,24 @@ public class Huffman {
             return;
         }
 
+               
+        Map<Character, Integer> freqMap = Node.countFrequencies(input);
+        Node root = Node.buildTree(freqMap);
+        if (root == null) return;
+        Map<Character, String> codeMap = new HashMap<>();
+        Node.buildCodeMap(root, "", codeMap);
+        String encoded = Node.encode(input,codeMap);
+        String decoded = Node.decode(encoded, root);
+        if (input.length() < 100){
+            System.out.println("Input string: " + input);
+            System.out.println("Encoded string: " + encoded);
+            System.out.println("Decoded string: " + decoded);
+        }
+        System.out.println("Decoded equals input: " + input.equals(decoded));
+        double compressionRatio = (double) encoded.length() / (input.length() * 8.0);
+        System.out.println("Compression ratio: " + compressionRatio);
+
        
      
     }
-}
 }
