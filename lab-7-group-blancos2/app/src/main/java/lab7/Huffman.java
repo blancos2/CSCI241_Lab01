@@ -41,30 +41,37 @@ public class Huffman {
         }
 
         // ENCODE STRING 
-              static String encode(String input, Map<Character, String> codeMap){
-            StringBuilder str_build = new StringBuilder();
-            // for each ch in char array 
-            for (char ch: input.toCharArray()){
-                str_build.append(codeMap.get(ch));
-            }
-            return str_build.toString();
+            static String encode(String input, Map<Character, String> codeMap){
+              StringBuilder encoded = new StringBuilder();
+                for (char ch : input.toCharArray()) {
+                    String code = codeMap.get(ch);
+                    if (code != null) {
+                        encoded.append(code);
+                    } else {
+                        throw new IllegalArgumentException("Character '" + ch + "' not found in code map.");
+                    }
+                }
+        return encoded.toString();
         }
 
         // DECODE STRING 
          static String decode(String encodedString, Node root){
-               StringBuilder str_results = new StringBuilder();
-            Node currentNode = root;
-            // for each bit from the encoded string 
-            for (char bit : encodedString.toCharArray()){
-                currentNode = (bit == '0') ? currentNode.left : currentNode.right;
-                if (currentNode.isitALeaf()){
-                    str_results.append(currentNode.character);
-                    currentNode = root;
+            StringBuilder decoded = new StringBuilder();
+            Node current = root;
+
+            for (char bit : encodedString.toCharArray()) {
+                // Traverse the tree based on the bit
+                current = (bit == '0') ? current.left : current.right;
+
+                // If a leaf node is reached, append the character
+                if (current.isitALeaf()) {
+                    decoded.append(current.character);
+                    current = root; // Restart from root for next sequence
                 }
             }
-            return str_results.toString();
 
-         }
+            return decoded.toString();
+        }
 
          // build Tree 
          static Node buildTree(Map<Character, Integer> freqMap){
