@@ -27,12 +27,43 @@ public class Huffman {
             this.right = right;
             this.frequency = left.frequency + right.frequency;
         }
+        // method to confirm if node is a leaf via confirming no L/R children 
+
         boolean isitALeaf(){
             if (left == null && right == null){
                 return true;
             }
             return false;
         }
+        // convert character from leaf into a string 
+         public String toString(){
+            return isitALeaf() ? "'" + character + "'" : "*";
+        }
+        public int compareTo(Node other){
+            return Integer.compare(this.frequency, other.frequency);
+        }
+        private static void buildCodeMap(Node node, String path, Map<Character, String> map){
+            if (node == null) return;
+            if (node.isitALeaf()){
+                map.put(node.character, path);
+                return;
+            }
+            buildCodeMap(node.left, path + "0", map);
+            buildCodeMap(node.right, path + "1", map);
+        }
+
+              static String encode(String input, Map<Character, String> codeMap){
+            StringBuilder strb = new StringBuilder();
+            for (char ch: input.toCharArray()){
+                strb.append(codeMap.get(ch));
+            }
+            return strb.toString();
+        }
+
+         static String decode(String encodedString, Node root){
+            
+         }
+            
 
     
 }
@@ -51,4 +82,5 @@ public class Huffman {
        
      
     }
+}
 }
