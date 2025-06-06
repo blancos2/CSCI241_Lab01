@@ -12,6 +12,43 @@ import heap.Heap;
 import java.util.*;
 
 public class Huffman {
+    static class Node implements Comparable<Node>{
+        char character;
+        int frequency;
+        Node left;
+        Node right;
+        
+        Node(char character, int frequency){
+            this.character = character;
+            this.frequency = frequency;
+        }
+        Node(Node left, Node right){
+            this.left = left;
+            this.right = right;
+            this.frequency = left.frequency + right.frequency;
+        }
+        boolean isitALeaf(){
+            if (left == null && right == null){
+                return true;
+            }
+            return false;
+        }
+
     
-    
+}
+
+  public static void main(String[] args) {
+        if (args.length < 1){
+            return;
+        }
+        String input = "";
+        try{
+            input = new String(Files.readAllBytes(Paths.get(args[0])));
+        } catch (IOException e) {
+            return;
+        }
+
+       
+     
+    }
 }
